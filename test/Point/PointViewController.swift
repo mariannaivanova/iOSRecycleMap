@@ -8,22 +8,32 @@
 import UIKit
 
 class PointViewController: UIViewController {
+    
+    var id: String = ""
+    var pView : PointView { return self.view as! PointView}
+    let point = Annotation(id: "", name: "", fractions: [], address: "", schedule: [])
+    
+    override func loadView() {
+        self.view = PointView(frame: UIScreen.main.bounds)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateInfo(id: id)
 
-        // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updateInfo(id: String) {
+        let point = Annotation(id: "", name: "", fractions: [], address: "", schedule: [])
+        let parsedPoint = point.parsePoint(id: id)
+        pView.NameLabel.text = parsedPoint.name
+        pView.AddressLabel.text = parsedPoint.address
+        let hours = "Часы работы: " + (parsedPoint.schedule?[0] ?? " ") + "-" + (parsedPoint.schedule?[1] ?? " ")
+        pView.HoursLabel.text = hours
+        pView.FractionsLabel.text = parsedPoint.fractions?[0]
     }
-    */
+    
+    
+    
 
 }
